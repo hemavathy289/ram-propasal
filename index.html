@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Proposal 💖</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #ffe6f0;
+  padding: 40px 15px;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: #ff3366;
+}
+
+p {
+  font-size: 18px;
+  color: #444;
+  max-width: 600px;
+  margin: auto;
+}
+
+button {
+  padding: 15px 35px;
+  font-size: 18px;
+  background-color: #ff6699;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+#lockScreen {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#passcode {
+  padding: 12px;
+  font-size: 18px;
+  width: 180px;
+  margin: 10px auto;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid #ff6699;
+}
+
+#error {
+  color: #ff3366;
+  margin-top: 10px;
+}
+
+#proposalContent {
+  display: none;
+}
+
+#popup {
+  display: none;
+  margin-top: 30px;
+  animation: popIn 0.6s ease-out;
+}
+
+#popup img {
+  width: 300px;
+  max-width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  margin-bottom: 15px;
+}
+
+#popup p {
+  font-size: 20px;
+  color: #ff3366;
+}
+
+#forever {
+  display: none;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ff3366;
+  margin-top: 20px;
+}
+
+/* Hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-700px); opacity: 0; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSCODE SCREEN -->
+<div id="lockScreen">
+  <h1>🔐 Enter the Passcode</h1>
+  <input type="password" id="passcode" maxlength="4" placeholder="4-digit code">
+  <button onclick="checkPasscode()">Unlock 🤍</button>
+  <div id="error"></div>
+</div>
+
+<!-- PROPOSAL CONTENT -->
+<div id="proposalContent">
+  <h1>💖 A Little Proposal 💖</h1>
+
+  <p>
+    We may not have started dating yet, but I’m excited for all the adventures we can share —
+    travel, movies, café trips, shopping, games, and lots of laughter.
+  </p>
+
+  <button id="acceptBtn" onclick="acceptProposal()">I Accept 💍</button>
+
+  <div id="popup">
+    <img src="first_photo.jpg" alt="Our First Photo">
+    <p>
+      I’m really glad you accepted me 💖  
+      Just like this photo, we need to click many more together.
+    </p>
+  </div>
+
+  <div id="forever">💍 Forever starts here 💍</div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b7d87c6fa.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+const CORRECT_PASSCODE = "2025";
+
+function checkPasscode() {
+  const input = document.getElementById("passcode").value;
+  if (input === CORRECT_PASSCODE) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("proposalContent").style.display = "block";
+  } else {
+    document.getElementById("error").innerText = "Wrong code 🤍 Try again";
+  }
+}
+
+function acceptProposal() {
+  document.getElementById("acceptBtn").style.display = "none";
+  document.getElementById("popup").style.display = "block";
+  document.getElementById("music").play();
+
+  // Confetti
+  let end = Date.now() + 3000;
+  (function frame() {
+    confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
+    confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+
+  // Hearts
+  for (let i = 0; i < 30; i++) {
+    let h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.animationDuration = (3 + Math.random() * 2) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 5000);
+  }
+
+  setTimeout(() => {
+    document.getElementById("forever").style.display = "block";
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
